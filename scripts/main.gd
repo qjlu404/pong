@@ -22,12 +22,12 @@ func _on_ball_ready():
 func _physics_process(delta):
 	if  Input.is_action_pressed("Paddle Up") and $Paddle.global_position.y>0:
 		$Paddle.global_position.y -= 200 * delta
-	if Input.is_action_pressed("Paddle Down") and $Paddle.global_position.y<540:
+	if Input.is_action_pressed("Paddle Down") and $Paddle.global_position.y<380:
 		$Paddle.global_position.y += 200 * delta
 	var yGoal = predict() + 100
-	if $"CPU Paddle".global_position.y < yGoal and $"CPU Paddle".global_position.y < 520:
+	if $"CPU Paddle".global_position.y < yGoal and $"CPU Paddle".global_position.y < 480:
 		$"CPU Paddle".global_position.y += 200*delta
-	if $"CPU Paddle".global_position.y > yGoal and $"CPU Paddle".global_position.y > 40:
+	if $"CPU Paddle".global_position.y > yGoal and $"CPU Paddle".global_position.y > 100:
 		$"CPU Paddle".global_position.y -= 200*delta
 
 
