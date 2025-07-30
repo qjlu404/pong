@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dklkauxjk608i"]
+
+[ext_resource type="Script" uid="uid://bs0l0esoa28e5" path="res://score_counter.gd" id="1_0v310"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0v310"]
+font_size = 48
+
+[node name="ScoreCounter" type="Control"]
+layout_mode = 3
+anchor_right = 0.125
+anchor_bottom = 0.133
+offset_bottom = 0.16
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0v310")
+
+[node name="ScoreDisplay" type="Label" parent="."]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 67.0
+text = "0"
+label_settings = SubResource("LabelSettings_0v310")

@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cor20ng1ryc01"]
+[gd_scene load_steps=11 format=3 uid="uid://dun2f263o2oft"]
 
-[ext_resource type="Script" uid="uid://dd57ly7m233h" path="res://scripts/main.gd" id="1_r0du0"]
-[ext_resource type="PackedScene" uid="uid://bfrmbbybe3s8y" path="res://Paddle.tscn" id="1_uu6xs"]
-[ext_resource type="Script" uid="uid://d0kjvamat33w" path="res://left_edge_area.gd" id="2_cm0pq"]
-[ext_resource type="PackedScene" uid="uid://bql4i1dtt06k2" path="res://ball.tscn" id="2_r0du0"]
+[ext_resource type="Script" uid="uid://d0kjvamat33w" path="res://scripts/left_edge_area.gd" id="1_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://bfrmbbybe3s8y" path="res://Scenes/Paddle.tscn" id="2_3dryh"]
+[ext_resource type="PackedScene" uid="uid://bql4i1dtt06k2" path="res://Scenes/ball.tscn" id="3_wowpa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fos0i"]
 size = Vector2(23.9999, 480)
@@ -30,26 +29,21 @@ bounce = 1.0
 friction = 0.0
 bounce = 1.0
 
-[node name="Main" type="Node2D"]
-script = ExtResource("1_r0du0")
+[node name="Game" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 240)
-
-[node name="Background" type="ColorRect" parent="."]
-offset_right = 640.0
-offset_bottom = 480.0
-color = Color(0, 0, 0, 1)
 
 [node name="Centerline" type="ColorRect" parent="."]
 offset_left = 318.0
 offset_right = 320.0
 offset_bottom = 480.0
+metadata/_edit_use_anchors_ = true
 
 [node name="LeftEdgeArea" type="Area2D" parent="."]
 position = Vector2(600, 213.016)
 rotation = -3.14159
-script = ExtResource("2_cm0pq")
+script = ExtResource("1_wrm1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftEdgeArea"]
 position = Vector2(588, -27.987)
@@ -63,14 +57,14 @@ rotation = -3.14159
 position = Vector2(-24.0001, -27.9843)
 shape = SubResource("RectangleShape2D_3dxm6")
 
-[node name="Paddle" parent="." instance=ExtResource("1_uu6xs")]
-position = Vector2(30, 0)
-
-[node name="CPU Paddle" parent="." instance=ExtResource("1_uu6xs")]
+[node name="CPU Paddle" parent="." instance=ExtResource("2_3dryh")]
 position = Vector2(600, 212.016)
 rotation = -3.14159
 
-[node name="Ball" parent="." instance=ExtResource("2_r0du0")]
+[node name="Paddle" parent="." instance=ExtResource("2_3dryh")]
+position = Vector2(30, 0)
+
+[node name="Ball" parent="." instance=ExtResource("3_wowpa")]
 position = Vector2(318, 188)
 
 [node name="BottomWall" type="StaticBody2D" parent="."]
@@ -106,9 +100,3 @@ physics_material_override = SubResource("PhysicsMaterial_3dxm6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
 position = Vector2(320, -24)
 shape = SubResource("WorldBoundaryShape2D_r0du0")
-
-[connection signal="area_entered" from="LeftEdgeArea" to="." method="_on_left_edge_area_area_entered"]
-[connection signal="area_entered" from="RightEdgeArea" to="." method="_on_right_edge_area_area_entered"]
-[connection signal="paddleExit" from="Paddle" to="." method="_on_paddle_paddle_exit"]
-[connection signal="paddleExit" from="CPU Paddle" to="." method="_on_paddle_paddle_exit"]
-[connection signal="ready" from="Ball" to="." method="_on_ball_ready"]

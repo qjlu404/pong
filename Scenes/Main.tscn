@@ -1,0 +1,153 @@
+[gd_scene load_steps=19 format=3 uid="uid://cor20ng1ryc01"]
+
+[ext_resource type="Script" uid="uid://dd57ly7m233h" path="res://scripts/main.gd" id="1_r0du0"]
+[ext_resource type="PackedScene" uid="uid://bfrmbbybe3s8y" path="res://Scenes/Paddle.tscn" id="1_uu6xs"]
+[ext_resource type="Script" uid="uid://d0kjvamat33w" path="res://scripts/left_edge_area.gd" id="2_cm0pq"]
+[ext_resource type="PackedScene" uid="uid://bql4i1dtt06k2" path="res://Scenes/ball.tscn" id="2_r0du0"]
+[ext_resource type="AudioStream" uid="uid://dmwv1kuve0so1" path="res://audio/CpuPaddleSound.ogg" id="4_50glp"]
+[ext_resource type="Script" uid="uid://dkgjwo21vtco5" path="res://Scenes/cpu_paddle.gd" id="4_bmxlf"]
+[ext_resource type="PackedScene" uid="uid://cdcr5jugi2b2p" path="res://Scenes/death_screen.tscn" id="5_v1gob"]
+[ext_resource type="AudioStream" uid="uid://djxqanjkc7fgc" path="res://audio/paddleSound.ogg" id="5_vy5pj"]
+[ext_resource type="Script" uid="uid://nbe0y8uccucs" path="res://Scenes/player_paddle.gd" id="6_4kpch"]
+[ext_resource type="PackedScene" uid="uid://bn0gdh2h7gwxn" path="res://Scenes/menu.tscn" id="6_jw32o"]
+[ext_resource type="PackedScene" uid="uid://dklkauxjk608i" path="res://Scenes/score_counter.tscn" id="11_4kpch"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fos0i"]
+size = Vector2(23.9999, 480)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dxm6"]
+size = Vector2(31.9992, 480)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r0du0"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_r0du0"]
+distance = -504.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cm0pq"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fos0i"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3dxm6"]
+friction = 0.0
+bounce = 1.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_r0du0")
+
+[node name="Game" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Game"]
+position = Vector2(320, 240)
+
+[node name="Centerline" type="ColorRect" parent="Game"]
+offset_left = 318.0
+offset_right = 320.0
+offset_bottom = 480.0
+metadata/_edit_use_anchors_ = true
+
+[node name="LeftEdgeArea" type="Area2D" parent="Game"]
+position = Vector2(600, 213.016)
+rotation = -3.14159
+script = ExtResource("2_cm0pq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/LeftEdgeArea"]
+position = Vector2(588, -27.987)
+shape = SubResource("RectangleShape2D_fos0i")
+
+[node name="RightEdgeArea" type="Area2D" parent="Game"]
+position = Vector2(600, 212.016)
+rotation = -3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/RightEdgeArea"]
+position = Vector2(-24.0001, -27.9843)
+shape = SubResource("RectangleShape2D_3dxm6")
+
+[node name="CPU Paddle" parent="Game" instance=ExtResource("1_uu6xs")]
+position = Vector2(600, 212.016)
+rotation = -3.14159
+script = ExtResource("4_bmxlf")
+
+[node name="CpuPaddleSound" type="AudioStreamPlayer" parent="Game/CPU Paddle"]
+stream = ExtResource("4_50glp")
+volume_db = -18.0
+
+[node name="Paddle" parent="Game" instance=ExtResource("1_uu6xs")]
+position = Vector2(30, 120)
+script = ExtResource("6_4kpch")
+
+[node name="PaddleSound" type="AudioStreamPlayer" parent="Game/Paddle"]
+stream = ExtResource("5_vy5pj")
+volume_db = -18.0
+
+[node name="Ball" parent="Game" instance=ExtResource("2_r0du0")]
+position = Vector2(318, 188)
+
+[node name="BottomWall" type="StaticBody2D" parent="Game"]
+physics_material_override = SubResource("PhysicsMaterial_r0du0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/BottomWall"]
+position = Vector2(320, -24)
+shape = SubResource("WorldBoundaryShape2D_r0du0")
+
+[node name="TopWall" type="StaticBody2D" parent="Game"]
+position = Vector2(640, 480)
+rotation = -3.14159
+physics_material_override = SubResource("PhysicsMaterial_cm0pq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/TopWall"]
+position = Vector2(320, -24)
+shape = SubResource("WorldBoundaryShape2D_r0du0")
+
+[node name="RightWall" type="StaticBody2D" parent="Game"]
+position = Vector2(160, 552)
+rotation = -1.57079
+physics_material_override = SubResource("PhysicsMaterial_fos0i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/RightWall"]
+position = Vector2(320, -24)
+shape = SubResource("WorldBoundaryShape2D_r0du0")
+
+[node name="LeftWall" type="StaticBody2D" parent="Game"]
+position = Vector2(480, -128)
+rotation = 1.57079
+physics_material_override = SubResource("PhysicsMaterial_3dxm6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/LeftWall"]
+position = Vector2(320, -24)
+shape = SubResource("WorldBoundaryShape2D_r0du0")
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="DeathScreen" parent="UserInterface" instance=ExtResource("5_v1gob")]
+visible = false
+
+[node name="Menu" parent="UserInterface" instance=ExtResource("6_jw32o")]
+visible = false
+
+[node name="PlayerScoreCount" parent="UserInterface" instance=ExtResource("11_4kpch")]
+offset_left = 128.0
+offset_top = 64.0
+offset_right = 128.0
+offset_bottom = 64.0
+
+[node name="CPUScoreCount" parent="UserInterface" instance=ExtResource("11_4kpch")]
+offset_left = 448.0
+offset_top = 64.0
+offset_right = 448.0
+offset_bottom = 64.0
+
+[connection signal="area_entered" from="Game/LeftEdgeArea" to="." method="_on_left_edge_area_area_entered"]
+[connection signal="area_entered" from="Game/RightEdgeArea" to="." method="_on_right_edge_area_area_entered"]
+[connection signal="paddleExit" from="Game/CPU Paddle" to="." method="_on_cpu_paddle_paddle_exit"]
+[connection signal="paddleExit" from="Game/CPU Paddle" to="." method="_on_paddle_paddle_exit"]
+[connection signal="paddleExit" from="Game/Paddle" to="." method="_on_player_paddle_paddle_exit"]
+[connection signal="paddleExit" from="Game/Paddle" to="." method="_on_paddle_paddle_exit"]
+[connection signal="ready" from="Game/Ball" to="." method="_on_ball_ready"]
+[connection signal="DSrestart" from="UserInterface/DeathScreen" to="." method="_on_death_screen_restart"]
