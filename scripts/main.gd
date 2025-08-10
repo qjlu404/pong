@@ -25,12 +25,12 @@ func _on_ball_ready():
 func _physics_process(delta):
 	if  Input.is_action_pressed("Paddle Up") and $Game/Paddle.global_position.y>0:
 		$Game/Paddle.global_position.y -= 200 * delta
-	if Input.is_action_pressed("Paddle Down") and $Game/Paddle.global_position.y<380:
+	if Input.is_action_pressed("Paddle Down") and $Game/Paddle.global_position.y<430:
 		$Game/Paddle.global_position.y += 200 * delta
-	var yGoal = predict() + 100
+	var yGoal = predict() + 70
 	if $Game/"CPU Paddle".global_position.y < yGoal and $Game/"CPU Paddle".global_position.y < 480:
 		$Game/"CPU Paddle".global_position.y += 200*delta
-	if $Game/"CPU Paddle".global_position.y > yGoal and $Game/"CPU Paddle".global_position.y > 100:
+	if $Game/"CPU Paddle".global_position.y > yGoal and $Game/"CPU Paddle".global_position.y > 50:
 		$Game/"CPU Paddle".global_position.y -= 200*delta
 
 
@@ -46,18 +46,21 @@ func _on_paddle_paddle_exit(): #Both Paddles
 func _on_left_edge_area_area_entered(area):
 	print("left area")
 	$Game.visible = false
+	$UserInterface/DeathScreen.setEndScreen("GameOver")
 	$UserInterface/DeathScreen.visible = true
 	get_tree().paused=true
 
 
 func _on_right_edge_area_area_entered(area):
 	print("right area")
+	$Game.visible = false
+	$UserInterface/DeathScreen.setEndScreen("You Win!")
+	$UserInterface/DeathScreen.visible = true
+	get_tree().paused=true
 
 
 func _on_death_screen_restart():
 	print("Restart!")
-	$UserInterface/PlayerScoreCount.reset()
-	$UserInterface/CPUScoreCount.reset()
 	var ball_instance = $Game/Ball
 	if ball_instance:
 		ball_instance.queue_free()
@@ -66,6 +69,8 @@ func _on_death_screen_restart():
 	$Game.add_child(ball_instance)
 	_on_ball_ready()
 	$Game/Ball.position = Vector2(318,188)
+	$UserInterface/PlayerScoreCount.reset()
+	$UserInterface/CPUScoreCount.reset()
 	$UserInterface/DeathScreen.visible = 0
 	$Game.visible = 1
 	get_tree().paused = false

@@ -145,9 +145,9 @@ offset_bottom = 64.0
 
 [connection signal="area_entered" from="Game/LeftEdgeArea" to="." method="_on_left_edge_area_area_entered"]
 [connection signal="area_entered" from="Game/RightEdgeArea" to="." method="_on_right_edge_area_area_entered"]
-[connection signal="paddleExit" from="Game/CPU Paddle" to="." method="_on_cpu_paddle_paddle_exit"]
 [connection signal="paddleExit" from="Game/CPU Paddle" to="." method="_on_paddle_paddle_exit"]
-[connection signal="paddleExit" from="Game/Paddle" to="." method="_on_player_paddle_paddle_exit"]
+[connection signal="paddleExit" from="Game/CPU Paddle" to="." method="_on_cpu_paddle_paddle_exit"]
 [connection signal="paddleExit" from="Game/Paddle" to="." method="_on_paddle_paddle_exit"]
+[connection signal="paddleExit" from="Game/Paddle" to="." method="_on_player_paddle_paddle_exit"]
 [connection signal="ready" from="Game/Ball" to="." method="_on_ball_ready"]
 [connection signal="DSrestart" from="UserInterface/DeathScreen" to="." method="_on_death_screen_restart"]
